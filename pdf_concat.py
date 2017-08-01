@@ -1,18 +1,14 @@
-from PyPDF2 import PdfFileMerger
+from PyPDF2 import PdfFileMerger, PdfFileReader
 
-input1_name = 'Babyborrelkaartje.pdf'
-input2_name ='kaartje 1.pdf'
-input3_name = 'kaartje 2.pdf'
-output_name = 'kaartjes.pdf'
+output_name = 'kaartjes2.pdf'
 
+input_files = ['kaartje 1.pdf', 'kaartje 2.pdf', 'benefits.pdf',]
 
 merger = PdfFileMerger()
 
-with open(input1_name, 'rb')as input1, \
-    open(input2_name, 'rb')as input2, \
-    open(input3_name, 'rb')as input3, \
-    open(output_name, 'wb') as output:
-    merger.append(fileobj = input1)
-    merger.append(fileobj = input2)
-    merger.append(fileobj = input3)
+with open(output_name, 'wb') as output:
+    for input_filename in input_files:
+        with open(input_filename, 'rb') as input_file:
+            merger.append(PdfFileReader(input_file))
     merger.write(output)
+merger.close()
